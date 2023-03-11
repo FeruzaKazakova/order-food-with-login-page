@@ -4,7 +4,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { uiSlice } from './ui/uiSlice'
 import authSlice from './auth/authSlice'
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
     meals: mealsSlice.reducer,
     basket: basketSlice.reducer,
@@ -12,3 +12,5 @@ export const store = configureStore({
     [authSlice.name]: authSlice.reducer
   }
 })
+
+export default store

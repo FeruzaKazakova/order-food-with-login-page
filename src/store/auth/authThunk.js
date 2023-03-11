@@ -22,10 +22,17 @@ export const signIn = createAsyncThunk(
         try{
             const {data} = await authService.signIn(payload)
             const userData = data.data
-            localStorage.getItem(STORAGE_KEYS.AUTH)
+            localStorage.getItem(STORAGE_KEYS.AUTH, JSON.stringify(userData))
             return userData
         }catch(error){
             return rejectWithValue(error)
         }
+    }
+)
+
+export const signOut = createAsyncThunk(
+    'auth/signout',
+    async () => {
+        return localStorage.removeItem(STORAGE_KEYS.AUTH)
     }
 )

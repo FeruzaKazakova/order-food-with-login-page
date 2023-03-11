@@ -4,8 +4,6 @@ import { Outlet } from "react-router-dom"
 import styled from "styled-components"
 import Basket from "../components/basket/Basket"
 import Header from "../components/header/Header"
-import Meals from "../components/meals/Meals"
-import Summary from "../components/summary/Summary"
 import { Snackbar } from "../components/UI/Snackbar"
 import { uiActions } from "../store/ui/uiSlice"
 
@@ -21,7 +19,6 @@ export const UserLayout = () => {
   return (
     <>
     <Header onShowBasket={showBasketHandler} />
-        <Content>
           {isBasketVisible && (
             <Basket open={isBasketVisible} onClose={showBasketHandler} />
           )}
@@ -31,6 +28,7 @@ export const UserLayout = () => {
             message={snackbar.message}
             onClose={() => dispatch(uiActions.closeSnackbar())}
           />
+          <Content>
           <Outlet/>
         </Content>
         </>

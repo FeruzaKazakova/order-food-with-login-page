@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styledComponents from 'styled-components'
 import { getTheme } from '../../lib/theme'
+import { signOut } from '../../store/auth/authThunk'
 import { getBasket } from '../../store/basket/basketThunk'
 import { uiActions } from '../../store/ui/uiSlice'
 import BasketButton from './BasketButton'
@@ -46,7 +47,7 @@ function Header ({onShowBasket}) {
     }
 
     const signOutHandler = () => {
-        navigate("/signin")
+        dispatch(signOut())
     }
 
     const signInHandler = () => {
@@ -56,10 +57,11 @@ function Header ({onShowBasket}) {
     return <Container>
         <Logo>ReactMeals</Logo>
         <StyledButton onClick={themeChangeHandler}>{themeMode === 'light' ? 'Dark Mode' : 'Light Mode'}</StyledButton>
-        {isAuthorized ? (<StyledButton onClick={signOutHandler}>Sign Out</StyledButton>) :
-       (<StyledButton onClick={signInHandler}>Sign In</StyledButton>)
+        {isAuthorized ? (<StyledButton onClick={signOutHandler}>Sign Out</StyledButton>
+        ) : ( 
+        <StyledButton onClick={signInHandler}>Sign In</StyledButton>)
         }
-        {isAuthorized ? <BasketButton className={animationClass} onClick={onShowBasket} count={calculateTotalAmount()}/> : null}
+        <BasketButton className={animationClass} onClick={onShowBasket} count={calculateTotalAmount()}/>
     </Container>
 }
 

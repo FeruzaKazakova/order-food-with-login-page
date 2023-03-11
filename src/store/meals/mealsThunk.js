@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { getMealRequest } from "../../api/mealService"
+import { editMealRequest, getMealRequest, postMealRequest, deleteMealRequest } from "../../api/mealService"
 
-const getMeals = createAsyncThunk(
+export const getMeals = createAsyncThunk(
     'meals/getMeals',
     async (_, { rejectWithValue }) => {
         try {
@@ -13,4 +13,38 @@ const getMeals = createAsyncThunk(
     }
 )
 
-export default getMeals
+export const postMeals = createAsyncThunk(
+    'meals/postMeals',
+    async (newMeal, { dispatch, rejectWithValue }) => {
+        try {
+            await postMealRequest(newMeal)
+            return dispatch(getMeals())
+        } catch (error) {
+            return rejectWithValue(error)
+        }
+    }
+)
+
+export const updateMeals = createAsyncThunk(
+    'meals/editMeals',
+    async (data, { dispatch, rejectWithValue }) => {
+        try {
+            await editMealRequest(data)
+            return dispatch(getMeals())
+        } catch (error) {
+            return rejectWithValue(error)
+        }
+    }
+)
+
+export const deleteMeals = createAsyncThunk(
+    'meals/deleteMeals',
+    async (id, { dispatch, rejectWithValue }) => {
+        try {
+            await deleteMealRequest(id)
+            return dispatch(getMeals())
+        } catch (error) {
+            return rejectWithValue(error)
+        }
+    }
+)

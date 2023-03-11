@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import getMeals from '../../store/meals/mealsThunk'
+import {getMeals} from '../../store/meals/mealsThunk'
 import MealItem from './meal-item/MealItem'
 
 const Meals = () => {

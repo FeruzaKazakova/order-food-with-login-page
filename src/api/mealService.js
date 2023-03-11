@@ -4,21 +4,18 @@ export const getMealRequest = () => {
     return axiosInstance.get('/foods')
 }
 
-export const getBasketReq = () => {
-    return axiosInstance.get('/basket')
+export const postMealRequest = (newMeal) => {
+    return axiosInstance.post('/foods', newMeal)
 }
 
-export const addToBasketReq = (newItem) => {
-    return axiosInstance.post(`/foods/${newItem.id}/addToBasket`, {
-        amount: newItem.amount,
-    })
+export const editMealRequest = ( data) => {
+    return axiosInstance.put(`/foods/${data.id}`, data.editData)
 }
 
-export const updateBasketItemReq = (id, basketAmount) => {
-    return axiosInstance.put(`/basketItem/${id}/update`, {
-        amount: basketAmount,
-    })
+export const deleteMealRequest = (id) => {
+    return axiosInstance.delete(`/foods/${id}`)
 }
-export const deleteBasketItemReq = (id) => {
-    return axiosInstance.delete(`/basketItem/${id}/delete`)
+
+export const getMealReq = (id) => {
+    return axiosInstance.get(`/foods/${id}`)
 }

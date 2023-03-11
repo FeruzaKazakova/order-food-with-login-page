@@ -1,17 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import {
-    addToBasketReq,
-    deleteBasketItemReq,
-    getBasketReq,
-    updateBasketItemReq,
-} from '../../api/mealService'
+import { addToBasketRequest, deleteBasketItemRequest, getBasketRequest, updateBasketItemRequest } from '../../api/itemService'
 import { fetchApi } from '../../lib/fetchApi'
 
 export const getBasket = createAsyncThunk(
     'basket/getBasket',
     async (_, { rejectWithValue }) => {
         try {
-            const { data } = await getBasketReq()
+            const { data } = await getBasketRequest()
             return data.data.items
         } catch (error) {
             return rejectWithValue(error)
@@ -23,7 +18,7 @@ export const addToBasket = createAsyncThunk(
     'basket/addNewBasket',
     async (newItem, { dispatch, rejectWithValue }) => {
         try {
-            await addToBasketReq(newItem)
+            await addToBasketRequest(newItem)
             dispatch(getBasket())
         } catch (error) {
             rejectWithValue(error)
@@ -34,7 +29,7 @@ export const updateBasketItem = createAsyncThunk(
     'basket/updateBasket',
     async ({ id, amount }, { dispatch, rejectWithValue }) => {
         try {
-            await updateBasketItemReq(id, amount)
+            await updateBasketItemRequest(id, amount)
             dispatch(getBasket())
         } catch (error) {
             rejectWithValue(error)
@@ -46,7 +41,7 @@ export const deleteBasketItem = createAsyncThunk(
     'basket/deleteBasket',
     async (id, { dispatch, rejectWithValue }) => {
         try {
-            await deleteBasketItemReq(id)
+            await deleteBasketItemRequest(id)
             dispatch(getBasket())
         } catch (error) {
             rejectWithValue(error)

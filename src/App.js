@@ -3,7 +3,6 @@ import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { darkTheme, lightTheme } from './lib/theme'
 import { UserLayout } from './layout/UserLayout'
-import { BrowserRouter } from 'react-router-dom'
 import { AppRoutes } from './routes/Routes'
 
 function App() {
@@ -25,12 +24,10 @@ function App() {
 
   return (
     <div>
-      <BrowserRouter>
       <ThemeProvider theme={theme}>
         <UserLayout/>
         <AppRoutes/>
       </ThemeProvider>
-      </BrowserRouter>
     </div>
   )
 }
