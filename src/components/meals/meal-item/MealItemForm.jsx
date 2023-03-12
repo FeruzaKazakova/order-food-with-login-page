@@ -1,16 +1,18 @@
 import { TextField } from '@mui/material'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import styledComponents from 'styled-components'
 import { styled } from '@mui/system'
 import { ReactComponent as PlusIcon } from '../../../assets/icons/plus-icon.svg'
 import Button from '../../UI/Button'
 import { addToBasket } from '../../../store/basket/basketThunk'
+import { withAuthModal } from '../../hoc/withAuthModal'
 
-const MealItemForm = ({ id, title, price }) => {
+const MealItemForm = ({ id, title, price, showAuthModal }) => {
   const dispatch = useDispatch()
 
   const [amount, setAmount] = useState(1)
+  const isAuthorized = useSelector((state) => state.auth.isAuthorized)
 
   const amountChangeHandler = (event) => {
     setAmount(event.target.value)
@@ -18,6 +20,10 @@ const MealItemForm = ({ id, title, price }) => {
 
   const submitHandler = (event) => {
     event.preventDefault()
+
+    if(!isAuthorized){
+      showAuthModal()
+    }
 
     const basketItem = {
       id,
@@ -30,6 +36,7 @@ const MealItemForm = ({ id, title, price }) => {
   }
 
   return (
+    <>
     <StyledForm onSubmit={submitHandler}>
       <Container>
         <label htmlFor={id}>Amount</label>
@@ -48,10 +55,11 @@ const MealItemForm = ({ id, title, price }) => {
         Add
       </Button>
     </StyledForm>
+    </>
   )
 }
 
-export default MealItemForm
+export default withAuthModal(MealItemForm)
 
 const StyledTextField = styled(TextField)(() => ({
   width: '60px',

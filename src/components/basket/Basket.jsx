@@ -4,7 +4,8 @@ import Modal from '../UI/Modal'
 import BasketItem from './BasketItem'
 import TotalAmount from './TotalAmount'
 import { uiActions } from '../../store/ui/uiSlice'
-import { deleteBasketItem, submitOrder, updateBasketItem } from '../../store/basket/basketThunk'
+import { deleteBasketItem, getBasket, submitOrder, updateBasketItem } from '../../store/basket/basketThunk'
+import { postOrders } from '../../store/orders/ordersThunk'
 
 const Basket = ({ onClose, open }) => {
   const items = useSelector((state) => state.basket.items)
@@ -25,9 +26,14 @@ const Basket = ({ onClose, open }) => {
     dispatch(updateBasketItem({ amount: amount + 1, id }))
   }
 
+  const price = {
+    totalPrice: getTotalPrice()
+  }
+
   const orderSubmitHandler = async () => {
     try {
-      await dispatch(submitOrder({ ordreData: { items } })).unwrap()
+      await dispatch(postOrders(price)).unwrap()
+      dispatch(getBasket())
 
       dispatch(
         uiActions.showSnackbar({

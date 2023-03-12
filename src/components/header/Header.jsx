@@ -8,9 +8,10 @@ import { getTheme } from '../../lib/theme'
 import { signOut } from '../../store/auth/authThunk'
 import { getBasket } from '../../store/basket/basketThunk'
 import { uiActions } from '../../store/ui/uiSlice'
+import { withAuthModal } from '../hoc/withAuthModal'
 import BasketButton from './BasketButton'
 
-function Header ({onShowBasket}) {
+function Header ({onShowBasket, showAuthModal}) {
     const navigate = useNavigate()
     const isAuthorized = useSelector((state) => state.auth.isAuthorized)
     const dispatch = useDispatch()
@@ -54,6 +55,13 @@ function Header ({onShowBasket}) {
         navigate("/signin")
     }
 
+    const goToMyOrders = () => {
+        if(!isAuthorized){
+            return showAuthModal()
+        }
+        return navigate('/myorders')
+    }
+
     return <Container>
         <Logo>ReactMeals</Logo>
         <StyledButton onClick={themeChangeHandler}>{themeMode === 'light' ? 'Dark Mode' : 'Light Mode'}</StyledButton>
@@ -61,11 +69,12 @@ function Header ({onShowBasket}) {
         ) : ( 
         <StyledButton onClick={signInHandler}>Sign In</StyledButton>)
         }
+        <StyledButton onClick={goToMyOrders}>My Orders</StyledButton>
         <BasketButton className={animationClass} onClick={onShowBasket} count={calculateTotalAmount()}/>
     </Container>
 }
 
-export default Header
+export default withAuthModal(Header)
 
 const StyledButton = styled(Button)(({theme}) => ({
     padding:' 10px 26px',

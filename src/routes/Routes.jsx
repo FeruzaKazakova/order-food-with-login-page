@@ -7,7 +7,8 @@ import { useSelector } from "react-redux";
 import ProtectedRoute from "./ProtectedRoute";
 import { UserRoles } from "../constants/common";
 import ErrorPage from "../pages/ErrorPage";
-import { Orders } from "../pages/admin/Orders";
+import { AdminOrders } from "../pages/admin/AdminOrders";
+import Orders from "../components/orders/Orders"
 import AdminMeals from "../pages/admin/AdminMeals";
 import { MealsPage } from "../pages/user/Meals";
 
@@ -35,6 +36,10 @@ export const AppRoutes = () => {
       isAllowed={isAllowed([UserRoles.GUEST, UserRoles.USER])}
       fallBackPath={role === UserRoles.ADMIN ? 'admin/meals' : '/'}
       component={SignInPage} />} />
+        <Route path="myorders" element={<ProtectedRoute
+      isAllowed={isAllowed([UserRoles.GUEST, UserRoles.USER])}
+      fallBackPath='admin/meals'
+      component={Orders} />} />
       </Route>
 
       <Route path="/admin" element={<ProtectedRoute
@@ -48,7 +53,7 @@ export const AppRoutes = () => {
         <Route path="orders" element={<ProtectedRoute
       isAllowed={isAllowed([UserRoles.ADMIN])}
       fallBackPath='/'
-      component={Orders} />} />
+      component={AdminOrders} />} />
       </Route>
       <Route path="*" element={<ErrorPage/>} />
     </Routes>
