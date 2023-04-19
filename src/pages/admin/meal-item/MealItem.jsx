@@ -2,7 +2,7 @@ import styledComp from 'styled-components'
 import {styled} from '@mui/system'
 import Button from '../../../components/UI/Button'
 
-const MealItem = ({meal, deleteMealHandler, editMealHandler, setEdit, saveEditedMeal}) => {
+const MealItem = ({meal, deleteMealHandler, editMealHandler, setEdit}) => {
     const editHandler = (id) => {
         setEdit(true)
         editMealHandler(id)

@@ -4,7 +4,7 @@ import Modal from '../UI/Modal'
 import BasketItem from './BasketItem'
 import TotalAmount from './TotalAmount'
 import { uiActions } from '../../store/ui/uiSlice'
-import { deleteBasketItem, getBasket, submitOrder, updateBasketItem } from '../../store/basket/basketThunk'
+import { deleteBasketItem, getBasket, updateBasketItem } from '../../store/basket/basketThunk'
 import { postOrders } from '../../store/orders/ordersThunk'
 
 const Basket = ({ onClose, open }) => {
